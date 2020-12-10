@@ -1,4 +1,8 @@
 echo ">>> .bash_aliases"
+if [ -f ~/.bash_aliases_before ]; then
+  . ~/.bash_aliases_before
+fi
+
 # source file
 alias sb="source ~/.bashrc;"
 alias sa="source ~/.bash_aliases"
@@ -6,7 +10,10 @@ alias sp="source ~/.bash_profile"
 
 alias eb="vi ~/.bashrc"
 alias ea="vi ~/.bash_aliases"
+alias eaa="vi ~/.bash_aliases_before"
 alias ep="vi ~/.bash_profile"
+
+alias ehost="sudo vi /etc/hosts"
 
 # Python
 alias pv="python -V"
