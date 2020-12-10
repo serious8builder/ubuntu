@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon for simpleapi
+After=network.target
+
+[Service]
+PIDFile=/home/ubuntu/project/simple-api/gunicorn.pid
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/project/simple-api
+#EnvironmentFile=/home/ubuntu/project/simple-api/.env
+ExecStartPre=/bin/bash -c 'sudo mkdir -p /run/gunicorn; sudo chown ubuntu:www-data /run/gunicorn; sudo mkdir -p /tmp/simple-api; sudo chmod a+w /tmp/simple-api'
+ExecStart=/home/ubuntu/.pyenv/versions/simple-api/bin/gunicorn --access-logfile - --timeout 300 --workers 1 --bind 0.0.0.0:8000 app.main:app --pid /home/ubuntu/project/simple-api/gunicorn.pid --log-file /home/>>ubuntu/project/simple-api/gunicorn.log  --access-logfile /home/ubuntu/project/simple-api/access.log --error-logfile /home/ubuntu/project/simple-api/error.log
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
